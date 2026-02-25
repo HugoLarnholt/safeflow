@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SafeFlow — Always know what you can spend</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --teak: #8b6f47;
+            --teak-light: #b8956a;
+            --teak-dark: #6b5236;
+            --cream: #faf7f2;
+            --warm-white: #ffffff;
+            --charcoal: #1e1e1e;
+            --mid: #5a5a5a;
+            --light: #9a9a9a;
+            --border: rgba(139,111,71,0.12);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--cream);
+            color: var(--charcoal);
+            overflow-x: hidden;
+        }
+
+        /* NAV */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            padding: 1.2rem 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(250,247,242,0.85);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--teak);
+            letter-spacing: -0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--mid);
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover { color: var(--teak); }
+
+        .nav-cta {
+            background: var(--teak);
+            color: white !important;
+            padding: 0.6rem 1.4rem;
+            border-radius: 50px;
+            font-weight: 600 !important;
+            transition: background 0.2s !important;
+        }
+
+        .nav-cta:hover { background: var(--teak-dark) !important; color: white !important; }
+
+        /* HERO */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 8rem 2rem 5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(139,111,71,0.08) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(139,111,71,0.1);
+            border: 1px solid rgba(139,111,71,0.2);
+            color: var(--teak);
+            font-size: 0.82rem;
+            font-weight: 600;
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            margin-bottom: 2rem;
+            letter-spacing: 0.3px;
+        }
+
+        .hero-pill span { width: 6px; height: 6px; background: var(--teak); border-radius: 50%; display: inline-block; }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3rem, 7vw, 5.5rem);
+            font-weight: 800;
+            line-height: 1.1;
+            color: var(--charcoal);
+            letter-spacing: -2px;
+            margin-bottom: 1.5rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero h1 em {
+            font-style: italic;
+            color: var(--teak);
+        }
+
+        .hero-sub {
+            font-size: 1.15rem;
+            color: var(--mid);
+            max-width: 520px;
+            margin: 0 auto 2.5rem;
+            line-height: 1.7;
+            font-weight: 400;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 4rem;
+        }
+
+        .btn-primary {
+            background: var(--teak);
+            color: white;
+            padding: 0.9rem 2.2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: all 0.25s;
+            box-shadow: 0 8px 24px rgba(139,111,71,0.3);
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        .btn-primary:hover {
+            background: var(--teak-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(139,111,71,0.4);
+        }
+
+        .btn-ghost {
+            color: var(--mid);
+            font-size: 0.95rem;
+            font-weight: 500;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: color 0.2s;
+        }
+
+        .btn-ghost:hover { color: var(--teak); }
+
+        /* PHONE MOCKUP */
+        .phone-wrap {
+            position: relative;
+            display: inline-block;
+            margin-top: 1rem;
+        }
+
+        .phone {
+            width: 280px;
+            background: var(--charcoal);
+            border-radius: 36px;
+            padding: 14px;
+            box-shadow: 0 40px 80px rgba(0,0,0,0.2), 0 0 0 1px rgba(255,255,255,0.05);
+            margin: 0 auto;
+        }
+
+        .phone-screen {
+            background: #f0ece6;
+            border-radius: 26px;
+            overflow: hidden;
+            padding: 1.5rem 1.2rem;
+        }
+
+        .phone-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.2rem;
+        }
+
+        .phone-greeting {
+            font-size: 0.7rem;
+            color: #888;
+            font-weight: 500;
+        }
+
+        .phone-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--charcoal);
+        }
+
+        .phone-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: var(--teak);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .balance-card {
+            background: var(--charcoal);
+            border-radius: 18px;
+            padding: 1.2rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .balance-label {
+            font-size: 0.65rem;
+            color: rgba(255,255,255,0.5);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.3rem;
+        }
+
+        .balance-amount {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .balance-sub {
+            font-size: 0.65rem;
+            color: rgba(255,255,255,0.4);
+            margin-top: 0.2rem;
+        }
+
+        .buckets {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .bucket {
+            background: white;
+            border-radius: 12px;
+            padding: 0.7rem 0.5rem;
+            text-align: center;
+        }
+
+        .bucket-icon { font-size: 1rem; margin-bottom: 0.2rem; }
+
+        .bucket-amount {
+            font-weight: 700;
+            font-size: 0.75rem;
+            color: var(--charcoal);
+        }
+
+        .bucket-label {
+            font-size: 0.55rem;
+            color: #888;
+            margin-top: 0.1rem;
+        }
+
+        .alert-card {
+            background: linear-gradient(135deg, var(--teak) 0%, var(--teak-dark) 100%);
+            border-radius: 14px;
+            padding: 0.9rem 1rem;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+        }
+
+        .alert-icon { font-size: 1.2rem; }
+
+        .alert-text { font-size: 0.65rem; line-height: 1.4; }
+
+        .alert-text strong { font-size: 0.72rem; display: block; margin-bottom: 0.1rem; }
+
+        /* SECTION BASE */
+        section { padding: 6rem 2rem; }
+
+        .container { max-width: 1100px; margin: 0 auto; }
+
+        .section-label {
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--teak);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            color: var(--charcoal);
+            letter-spacing: -1px;
+            line-height: 1.15;
+            margin-bottom: 1rem;
+        }
+
+        .section-sub {
+            font-size: 1.05rem;
+            color: var(--mid);
+            max-width: 500px;
+            line-height: 1.7;
+        }
+
+        /* HOW IT WORKS */
+        .how-it-works {
+            background: white;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3rem;
+            margin-top: 4rem;
+        }
+
+        .step-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: rgba(139,111,71,0.12);
+            line-height: 1;
+            margin-bottom: 1rem;
+        }
+
+        .step-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--charcoal);
+            margin-bottom: 0.6rem;
+        }
+
+        .step-desc {
+            font-size: 0.95rem;
+            color: var(--mid);
+            line-height: 1.7;
+        }
+
+        /* FEATURES */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-top: 4rem;
+        }
+
+        .feat-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+
+        .feat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 40px rgba(0,0,0,0.07);
+        }
+
+        .feat-card.large {
+            grid-column: span 2;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: center;
+            background: var(--charcoal);
+            color: white;
+        }
+
+        .feat-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(139,111,71,0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .feat-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--charcoal);
+            margin-bottom: 0.5rem;
+        }
+
+        .feat-card.large .feat-title { color: white; }
+
+        .feat-desc {
+            font-size: 0.92rem;
+            color: var(--mid);
+            line-height: 1.65;
+        }
+
+        .feat-card.large .feat-desc { color: rgba(255,255,255,0.6); }
+
+        .feat-visual {
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .spend-bar-wrap { margin: 0.8rem 0; }
+
+        .spend-bar-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 0.4rem;
+        }
+
+        .spend-bar {
+            height: 6px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 50px;
+            overflow: hidden;
+        }
+
+        .spend-fill {
+            height: 100%;
+            border-radius: 50px;
+            background: linear-gradient(90deg, var(--teak-light), var(--teak));
+        }
+
+        /* PRICING */
+        .pricing {
+            background: white;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 4rem;
+        }
+
+        .price-card {
+            border-radius: 20px;
+            padding: 2.5rem 2rem;
+            border: 1px solid var(--border);
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .price-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.08);
+        }
+
+        .price-card.featured {
+            background: var(--charcoal);
+            border-color: transparent;
+            color: white;
+        }
+
+        .price-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--teak);
+            color: white;
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 0.25rem 1rem;
+            border-radius: 50px;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+
+        .price-tier {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--teak);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 1rem;
+        }
+
+        .price-card.featured .price-tier { color: rgba(255,255,255,0.5); }
+
+        .price-amount {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--charcoal);
+            line-height: 1;
+            margin-bottom: 0.3rem;
+        }
+
+        .price-card.featured .price-amount { color: white; }
+
+        .price-period {
+            font-size: 0.85rem;
+            color: var(--light);
+            margin-bottom: 2rem;
+        }
+
+        .price-card.featured .price-period { color: rgba(255,255,255,0.4); }
+
+        .price-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .price-features li {
+            padding: 0.55rem 0;
+            font-size: 0.9rem;
+            color: var(--mid);
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            border-bottom: 1px solid rgba(0,0,0,0.04);
+        }
+
+        .price-card.featured .price-features li { color: rgba(255,255,255,0.7); border-color: rgba(255,255,255,0.06); }
+
+        .price-features li::before {
+            content: '✓';
+            color: var(--teak);
+            font-weight: 700;
+            font-size: 0.85rem;
+            flex-shrink: 0;
+        }
+
+        .price-card.featured .price-features li::before { color: var(--teak-light); }
+
+        .price-btn {
+            width: 100%;
+            padding: 0.85rem;
+            border-radius: 50px;
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.25s;
+            border: 2px solid var(--teak);
+            background: transparent;
+            color: var(--teak);
+        }
+
+        .price-btn:hover { background: var(--teak); color: white; }
+
+        .price-card.featured .price-btn {
+            background: var(--teak);
+            color: white;
+            border-color: var(--teak);
+        }
+
+        .price-card.featured .price-btn:hover { background: var(--teak-light); }
+
+        /* TESTIMONIALS */
+        .testimonials { background: var(--cream); }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 4rem;
+        }
+
+        .testi-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid var(--border);
+        }
+
+        .testi-stars {
+            color: var(--teak);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
+        }
+
+        .testi-text {
+            font-size: 0.95rem;
+            color: var(--mid);
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+            font-style: italic;
+        }
+
+        .testi-author {
+            font-weight: 600;
+            font-size: 0.88rem;
+            color: var(--charcoal);
+        }
+
+        .testi-role {
+            font-size: 0.8rem;
+            color: var(--light);
+        }
+
+        /* CTA */
+        .cta-section {
+            background: var(--charcoal);
+            text-align: center;
+            padding: 8rem 2rem;
+        }
+
+        .cta-section .section-label { color: var(--teak-light); }
+
+        .cta-section .section-title { color: white; max-width: 700px; margin: 0 auto 1.5rem; }
+
+        .cta-section .section-sub { color: rgba(255,255,255,0.5); margin: 0 auto 3rem; }
+
+        .waitlist-form {
+            display: flex;
+            gap: 0.8rem;
+            justify-content: center;
+            max-width: 420px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+        }
+
+        .waitlist-input {
+            flex: 1;
+            min-width: 220px;
+            padding: 0.9rem 1.5rem;
+            border-radius: 50px;
+            border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.06);
+            color: white;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.95rem;
+            outline: none;
+            transition: border 0.2s;
+        }
+
+        .waitlist-input::placeholder { color: rgba(255,255,255,0.3); }
+
+        .waitlist-input:focus { border-color: var(--teak-light); }
+
+        .cta-note {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.3);
+            margin-top: 1rem;
+        }
+
+        /* FOOTER */
+        footer {
+            background: var(--charcoal);
+            border-top: 1px solid rgba(255,255,255,0.06);
+            padding: 2rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--teak-light);
+        }
+
+        .footer-copy {
+            font-size: 0.82rem;
+            color: rgba(255,255,255,0.25);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav { padding: 1rem 1.5rem; }
+            .nav-links { display: none; }
+            .steps, .pricing-grid, .testimonials-grid { grid-template-columns: 1fr; }
+            .features-grid { grid-template-columns: 1fr; }
+            .feat-card.large { grid-column: span 1; grid-template-columns: 1fr; }
+            footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAV -->
+    <nav>
+        <div class="nav-logo">SafeFlow</div>
+        <ul class="nav-links">
+            <li><a href="#how">How it works</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#pricing">Pricing</a></li>
+            <li><a href="#waitlist" class="nav-cta">Join waitlist</a></li>
+        </ul>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div>
+            <div class="hero-pill"><span></span> Now in early access</div>
+            <h1>Always know what<br>you can <em>spend tonight.</em></h1>
+            <p class="hero-sub">SafeFlow splits your money automatically — bills, savings, and what's truly yours to spend. No more guessing. No more regret.</p>
+            <div class="hero-actions">
+                <a href="#waitlist" class="btn-primary">Join the waitlist</a>
+                <a href="#how" class="btn-ghost">See how it works →</a>
+            </div>
+
+            <!-- Phone mockup -->
+            <div class="phone-wrap">
+                <div class="phone">
+                    <div class="phone-screen">
+                        <div class="phone-header">
+                            <div>
+                                <div class="phone-greeting">Good evening,</div>
+                                <div class="phone-name">Hugo</div>
+                            </div>
+                            <div class="phone-avatar">H</div>
+                        </div>
+
+                        <div class="balance-card">
+                            <div class="balance-label">Spend freely</div>
+                            <div class="balance-amount">€187</div>
+                            <div class="balance-sub">of €650 salary this month</div>
+                        </div>
+
+                        <div class="buckets">
+                            <div class="bucket">
+                                <div class="bucket-icon">🏠</div>
+                                <div class="bucket-amount">€320</div>
+                                <div class="bucket-label">Fixed</div>
+                            </div>
+                            <div class="bucket">
+                                <div class="bucket-icon">🔒</div>
+                                <div class="bucket-amount">€143</div>
+                                <div class="bucket-label">Saved</div>
+                            </div>
+                            <div class="bucket">
+                                <div class="bucket-icon">✨</div>
+                                <div class="bucket-amount">€187</div>
+                                <div class="bucket-label">Yours</div>
+                            </div>
+                        </div>
+
+                        <div class="alert-card">
+                            <div class="alert-icon">📍</div>
+                            <div class="alert-text">
+                                <strong>Spending alert</strong>
+                                €23 left for going out this week. You've spent €47 on nightlife.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="how-it-works" id="how">
+        <div class="container">
+            <div class="section-label">How it works</div>
+            <div class="section-title">Three steps.<br>Total clarity.</div>
+            <p class="section-sub">SafeFlow takes 2 minutes to set up. Then it runs quietly in the background, keeping you honest.</p>
+
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">01</div>
+                    <div class="step-title">Connect your bank</div>
+                    <p class="step-desc">Link your ING, ABN AMRO, Rabobank or any EU bank securely via open banking. Read-only — SafeFlow never moves your money without permission.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">02</div>
+                    <div class="step-title">Set your split</div>
+                    <p class="step-desc">Tell SafeFlow your fixed costs and savings target. Every time you get paid, it automatically splits your balance into three clear buckets.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">03</div>
+                    <div class="step-title">Spend with confidence</div>
+                    <p class="step-desc">Your "spend freely" balance updates in real time. Get smart alerts when you're running low in any category — no surprises at the end of the month.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section id="features">
+        <div class="container">
+            <div class="section-label">Features</div>
+            <div class="section-title">Built for how<br>students actually live.</div>
+            <p class="section-sub">Variable income, impulsive moments, big nights out — SafeFlow handles the reality of student finances.</p>
+
+            <div class="features-grid">
+                <div class="feat-card large">
+                    <div>
+                        <div class="feat-icon" style="background: rgba(255,255,255,0.06);">📊</div>
+                        <div class="feat-title" style="color:white;">Real-time spending by category</div>
+                        <p class="feat-desc">Know exactly how much you've spent going out, on food, on subscriptions — and how much is left. Updated instantly every time you pay.</p>
+                    </div>
+                    <div class="feat-visual">
+                        <div style="font-size:0.7rem; color:rgba(255,255,255,0.4); margin-bottom:1rem; text-transform:uppercase; letter-spacing:1px;">This week</div>
+                        <div class="spend-bar-wrap">
+                            <div class="spend-bar-label"><span>🎉 Going out</span><span style="color:rgba(255,255,255,0.7);">€47 / €70</span></div>
+                            <div class="spend-bar"><div class="spend-fill" style="width:67%"></div></div>
+                        </div>
+                        <div class="spend-bar-wrap">
+                            <div class="spend-bar-label"><span>🍔 Food & drink</span><span style="color:rgba(255,255,255,0.7);">€38 / €80</span></div>
+                            <div class="spend-bar"><div class="spend-fill" style="width:47%"></div></div>
+                        </div>
+                        <div class="spend-bar-wrap">
+                            <div class="spend-bar-label"><span>🚌 Transport</span><span style="color:rgba(255,255,255,0.7);">€12 / €30</span></div>
+                            <div class="spend-bar"><div class="spend-fill" style="width:40%"></div></div>
+                        </div>
+                        <div class="spend-bar-wrap">
+                            <div class="spend-bar-label"><span>🛍️ Shopping</span><span style="color:rgba(255,255,255,0.7);">€22 / €50</span></div>
+                            <div class="spend-bar"><div class="spend-fill" style="width:44%"></div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="feat-card">
+                    <div class="feat-icon">🔒</div>
+                    <div class="feat-title">Savings lock</div>
+                    <p class="feat-desc">Set a savings goal and lock it. Want to withdraw early? A 48-hour cooling-off period makes sure you actually mean it.</p>
+                </div>
+
+                <div class="feat-card">
+                    <div class="feat-icon">🎯</div>
+                    <div class="feat-title">Savings goals</div>
+                    <p class="feat-desc">Trip to Barcelona? New laptop? Set a goal, pick a deadline, and SafeFlow automatically reserves what you need each month.</p>
+                </div>
+
+                <div class="feat-card">
+                    <div class="feat-icon">📍</div>
+                    <div class="feat-title">Smart alerts</div>
+                    <p class="feat-desc">"You've spent €47 going out this week. €23 left." Get nudged before you overspend — not after.</p>
+                </div>
+
+                <div class="feat-card">
+                    <div class="feat-icon">⚡</div>
+                    <div class="feat-title">Auto-split on payday</div>
+                    <p class="feat-desc">The moment your salary lands, SafeFlow instantly splits it into fixed costs, savings, and yours to spend. Zero effort required.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRICING -->
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <div class="section-label">Pricing</div>
+            <div class="section-title">Start free.<br>Upgrade when ready.</div>
+            <p class="section-sub">No credit card needed to get started. Upgrade to premium only when you're hooked.</p>
+
+            <div class="pricing-grid">
+                <div class="price-card">
+                    <div class="price-tier">Free</div>
+                    <div class="price-amount">€0</div>
+                    <div class="price-period">forever</div>
+                    <ul class="price-features">
+                        <li>Bank account connection</li>
+                        <li>Balance overview</li>
+                        <li>Manual budget split</li>
+                        <li>Basic spending view</li>
+                    </ul>
+                    <button class="price-btn">Get started free</button>
+                </div>
+
+                <div class="price-card featured">
+                    <div class="price-badge">Most popular</div>
+                    <div class="price-tier">Premium</div>
+                    <div class="price-amount">€4.99</div>
+                    <div class="price-period">per month</div>
+                    <ul class="price-features">
+                        <li>Everything in Free</li>
+                        <li>Auto-split on payday</li>
+                        <li>Real-time category tracking</li>
+                        <li>Smart spending alerts</li>
+                        <li>Savings lock & goals</li>
+                        <li>Spending history & insights</li>
+                    </ul>
+                    <button class="price-btn">Join waitlist</button>
+                </div>
+
+                <div class="price-card">
+                    <div class="price-tier">Pro</div>
+                    <div class="price-amount">€9.99</div>
+                    <div class="price-period">per month</div>
+                    <ul class="price-features">
+                        <li>Everything in Premium</li>
+                        <li>Multiple bank accounts</li>
+                        <li>Friend accountability mode</li>
+                        <li>Custom budget rules</li>
+                        <li>Export & reports</li>
+                        <li>Priority support</li>
+                    </ul>
+                    <button class="price-btn">Join waitlist</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="testimonials">
+        <div class="container">
+            <div class="section-label">Early feedback</div>
+            <div class="section-title">What students said<br>in our research.</div>
+
+            <div class="testimonials-grid">
+                <div class="testi-card">
+                    <div class="testi-stars">★★★★★</div>
+                    <p class="testi-text">"If it tracked my spending and told me I can only spend €20 more going out tonight — I would be sold. That's exactly what I need."</p>
+                    <div class="testi-author">Survey respondent</div>
+                    <div class="testi-role">University student, Netherlands</div>
+                </div>
+                <div class="testi-card">
+                    <div class="testi-stars">★★★★★</div>
+                    <p class="testi-text">"I want to manage my finances and be financially responsible with my income and spending. An app that actually helps with that would be great."</p>
+                    <div class="testi-author">Survey respondent</div>
+                    <div class="testi-role">University student, Netherlands</div>
+                </div>
+                <div class="testi-card">
+                    <div class="testi-stars">★★★★☆</div>
+                    <p class="testi-text">"If it could connect to my bank account and show me a clear savings goal with progress, I'd use it every day."</p>
+                    <div class="testi-author">Survey respondent</div>
+                    <div class="testi-role">University student, Netherlands</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA / WAITLIST -->
+    <section class="cta-section" id="waitlist">
+        <div class="container">
+            <div class="section-label">Early access</div>
+            <div class="section-title">Be the first to know<br>when we launch.</div>
+            <p class="section-sub">Join the waitlist and get early access, a free premium trial, and a say in what we build next.</p>
+
+            <form class="waitlist-form" onsubmit="handleSubmit(event)">
+                <input type="email" class="waitlist-input" placeholder="your@email.com" required>
+                <button type="submit" class="btn-primary">Join waitlist</button>
+            </form>
+            <p class="cta-note">No spam. Unsubscribe anytime. We're building this for you.</p>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-logo">SafeFlow</div>
+        <div class="footer-copy">© 2026 SafeFlow. All rights reserved.</div>
+    </footer>
+
+    <script>
+        function handleSubmit(e) {
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            const input = e.target.querySelector('input');
+            btn.textContent = '✓ You\'re on the list!';
+            btn.style.background = '#5a8a5a';
+            input.disabled = true;
+            btn.disabled = true;
+        }
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(a => {
+            a.addEventListener('click', e => {
+                e.preventDefault();
+                document.querySelector(a.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+    </script>
+
+</body>
+</html>
