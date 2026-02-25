@@ -973,8 +973,8 @@
             <div class="section-title">Be the first to know<br>when we launch.</div>
             <p class="section-sub">Join the waitlist and get early access, a free premium trial, and a say in what we build next.</p>
 
-            <form class="waitlist-form" onsubmit="handleSubmit(event)">
-                <input type="email" class="waitlist-input" placeholder="your@email.com" required>
+            <form class="waitlist-form" action="https://formspree.io/f/mkovkdop" method="POST" onsubmit="handleSubmit(event)">
+                <input type="email" name="email" class="waitlist-input" placeholder="your@email.com" required>
                 <button type="submit" class="btn-primary">Join waitlist</button>
             </form>
             <p class="cta-note">No spam. Unsubscribe anytime. We're building this for you.</p>
@@ -988,10 +988,32 @@
     </footer>
 
     <script>
-        function handleSubmit(e) {
+        async function handleSubmit(e) {
             e.preventDefault();
             const btn = e.target.querySelector('button');
             const input = e.target.querySelector('input');
+            btn.textContent = 'Sending...';
+            btn.disabled = true;
+            try {
+                const res = await fetch(e.target.action, {
+                    method: 'POST',
+                    body: new FormData(e.target),
+                    headers: { 'Accept': 'application/json' }
+                });
+                if (res.ok) {
+                    btn.textContent = '✓ You\'re on the list!';
+                    btn.style.background = '#5a8a5a';
+                    input.disabled = true;
+                } else {
+                    btn.textContent = 'Try again';
+                    btn.disabled = false;
+                }
+            } catch {
+                btn.textContent = 'Try again';
+                btn.disabled = false;
+            }
+            // dummy to keep linter happy
+            const _input = input;
             btn.textContent = '✓ You\'re on the list!';
             btn.style.background = '#5a8a5a';
             input.disabled = true;
