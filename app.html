@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>SafeFlow</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
   --gold: #8b6f47;
@@ -29,7 +28,7 @@
 * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
 html { scroll-behavior: smooth; }
 body {
-  font-family:'DM Sans',sans-serif;
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
   background: var(--bg);
   color: var(--text);
   min-height: 100vh;
@@ -88,7 +87,7 @@ body {
   display:flex; align-items:center; justify-content:center; flex-direction:column;
 }
 .ob-hero-logo {
-  font-family:'Playfair Display',serif; font-size:2.6rem; font-weight:800;
+  font-family:Georgia,'Times New Roman',serif; font-size:2.6rem; font-weight:800;
   color:#f0ece6; letter-spacing:-0.5px; margin-bottom:0.3rem;
 }
 .ob-hero-sub { font-size:0.88rem; color:rgba(255,255,255,0.45); font-weight:400; }
@@ -100,7 +99,7 @@ body {
 
 .ob-body { flex:1; padding:2rem 1.5rem; display:flex; flex-direction:column; }
 .ob-step-ind { font-size:0.7rem; color:var(--light); font-weight:600; text-transform:uppercase; letter-spacing:1px; margin-bottom:1.2rem; }
-.ob-h { font-family:'Playfair Display',serif; font-size:1.75rem; font-weight:700; line-height:1.2; margin-bottom:0.6rem; }
+.ob-h { font-family:Georgia,'Times New Roman',serif; font-size:1.75rem; font-weight:700; line-height:1.2; margin-bottom:0.6rem; }
 .ob-p { font-size:0.88rem; color:var(--mid); line-height:1.65; margin-bottom:1.8rem; }
 
 .input-group { margin-bottom:1.1rem; }
@@ -108,7 +107,7 @@ body {
 .input-field {
   width:100%; background:var(--bg3); border:1.5px solid var(--border2);
   border-radius:14px; padding:1rem 1.2rem; color:var(--text);
-  font-family:'DM Sans',sans-serif; font-size:1rem; outline:none; transition:border 0.2s;
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; font-size:1rem; outline:none; transition:border 0.2s;
 }
 .input-field:focus { border-color:var(--gold); background:var(--bg2); }
 .input-field::placeholder { color:var(--light); }
@@ -118,7 +117,7 @@ body {
 
 .btn {
   width:100%; padding:1.05rem; border-radius:50px;
-  font-family:'DM Sans',sans-serif; font-weight:700; font-size:1rem;
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; font-weight:700; font-size:1rem;
   border:none; cursor:pointer; transition:all 0.2s; letter-spacing:0.2px;
 }
 .btn-gold { background:var(--gold); color:#fff; box-shadow:0 4px 18px rgba(139,111,71,0.3); }
@@ -157,11 +156,11 @@ body {
   animation:spin 1s linear infinite; margin-bottom:1.5rem;
 }
 @keyframes spin { to { transform:rotate(360deg); } }
-.connect-bank-name { font-family:'Playfair Display',serif; font-size:1.3rem; font-weight:700; margin-bottom:0.5rem; }
+.connect-bank-name { font-family:Georgia,'Times New Roman',serif; font-size:1.3rem; font-weight:700; margin-bottom:0.5rem; }
 .connect-status { font-size:0.85rem; color:var(--mid); }
 
 .success-icon { font-size:3.5rem; margin-bottom:1rem; }
-.success-title { font-family:'Playfair Display',serif; font-size:1.5rem; font-weight:700; margin-bottom:0.5rem; }
+.success-title { font-family:Georgia,'Times New Roman',serif; font-size:1.5rem; font-weight:700; margin-bottom:0.5rem; }
 .success-sub { font-size:0.88rem; color:var(--mid); line-height:1.6; }
 
 /* ── HOME HEADER ── */
@@ -173,7 +172,7 @@ body {
 }
 .header-row { display:flex; justify-content:space-between; align-items:flex-start; }
 .greeting { font-size:0.72rem; color:var(--mid); margin-bottom:0.2rem; }
-.username { font-family:'Playfair Display',serif; font-size:1.35rem; font-weight:700; }
+.username { font-family:Georgia,'Times New Roman',serif; font-size:1.35rem; font-weight:700; }
 .avatar {
   width:40px; height:40px; border-radius:50%;
   background:var(--gold); color:#fff;
@@ -209,7 +208,7 @@ body {
   background:rgba(139,111,71,0.07);
 }
 .balance-label { font-size:0.63rem; color:rgba(240,236,230,0.5); text-transform:uppercase; letter-spacing:2px; font-weight:600; margin-bottom:0.3rem; }
-.balance-amount { font-family:'Playfair Display',serif; font-size:3.2rem; font-weight:800; color:#f0ece6; line-height:1; margin-bottom:0.25rem; }
+.balance-amount { font-family:Georgia,'Times New Roman',serif; font-size:3.2rem; font-weight:800; color:#f0ece6; line-height:1; margin-bottom:0.25rem; }
 .balance-sub { font-size:0.72rem; color:rgba(240,236,230,0.4); margin-bottom:1.2rem; }
 .balance-row { display:flex; gap:1.5rem; }
 .balance-stat {}
@@ -301,7 +300,7 @@ body {
   background:rgba(139,111,71,0.15);
 }
 .savings-title-sm { font-size:0.65rem; color:rgba(255,255,255,0.4); text-transform:uppercase; letter-spacing:2px; font-weight:600; margin-bottom:0.3rem; }
-.savings-total { font-family:'Playfair Display',serif; font-size:2.8rem; font-weight:800; color:#f0ece6; line-height:1; margin-bottom:0.2rem; }
+.savings-total { font-family:Georgia,'Times New Roman',serif; font-size:2.8rem; font-weight:800; color:#f0ece6; line-height:1; margin-bottom:0.2rem; }
 .savings-sub { font-size:0.78rem; color:rgba(255,255,255,0.4); margin-bottom:1.2rem; }
 .savings-progress-bar { height:6px; background:rgba(255,255,255,0.12); border-radius:50px; overflow:hidden; margin-bottom:0.5rem; }
 .savings-progress-fill { height:100%; border-radius:50px; background:linear-gradient(90deg,#a07840,#d4a96a); transition:width 0.6s; }
@@ -322,7 +321,7 @@ body {
 .vault-badge.unlocked { background:var(--green-bg); color:var(--green); }
 .vault-badge.free { background:var(--bg3); color:var(--mid); }
 
-.vault-name { font-family:'Playfair Display',serif; font-size:1.2rem; font-weight:700; margin-bottom:0.3rem; }
+.vault-name { font-family:Georgia,'Times New Roman',serif; font-size:1.2rem; font-weight:700; margin-bottom:0.3rem; }
 .vault-amount { font-size:1.6rem; font-weight:800; color:var(--gold); margin-bottom:0.3rem; }
 .vault-target { font-size:0.78rem; color:var(--mid); margin-bottom:0.9rem; }
 .vault-bar { height:5px; background:var(--bg4); border-radius:50px; overflow:hidden; margin-bottom:0.9rem; }
@@ -330,7 +329,7 @@ body {
 .vault-actions { display:flex; gap:0.7rem; }
 .vault-btn {
   flex:1; padding:0.75rem 0.5rem; border-radius:50px;
-  font-family:'DM Sans',sans-serif; font-weight:700; font-size:0.8rem;
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; font-weight:700; font-size:0.8rem;
   border:none; cursor:pointer; transition:all 0.2s;
 }
 .vault-btn.primary { background:var(--gold); color:#fff; }
@@ -348,7 +347,7 @@ body {
 
 /* ── INSIGHTS SCREEN ── */
 .insights-header { padding:3.2rem 1.5rem 1.5rem; background:var(--bg); border-bottom:1px solid var(--border2); }
-.insights-h { font-family:'Playfair Display',serif; font-size:1.5rem; font-weight:700; margin-bottom:0.3rem; }
+.insights-h { font-family:Georgia,'Times New Roman',serif; font-size:1.5rem; font-weight:700; margin-bottom:0.3rem; }
 .insights-sub { font-size:0.82rem; color:var(--mid); }
 
 .month-selector { display:flex; align-items:center; justify-content:space-between; padding:0 1.5rem; margin:1.2rem 0; }
@@ -374,7 +373,7 @@ body {
 .badge-up { background:var(--red-bg); color:var(--red); }
 .badge-down { background:var(--green-bg); color:var(--green); }
 .badge-same { background:var(--bg3); color:var(--mid); }
-.insight-card-val { font-family:'Playfair Display',serif; font-size:1.8rem; font-weight:800; }
+.insight-card-val { font-family:Georgia,'Times New Roman',serif; font-size:1.8rem; font-weight:800; }
 .insight-card-sub { font-size:0.78rem; color:var(--mid); margin-top:0.2rem; }
 
 /* ── FRIENDS UNLOCK MODAL ── */
@@ -392,7 +391,7 @@ body {
 }
 .modal-overlay.open .modal { transform:translateY(0); }
 .modal-handle { width:40px; height:4px; background:var(--bg4); border-radius:50px; margin:1rem auto 1.5rem; }
-.modal-title { font-family:'Playfair Display',serif; font-size:1.4rem; font-weight:700; padding:0 1.5rem; margin-bottom:0.5rem; }
+.modal-title { font-family:Georgia,'Times New Roman',serif; font-size:1.4rem; font-weight:700; padding:0 1.5rem; margin-bottom:0.5rem; }
 .modal-sub { font-size:0.82rem; color:var(--mid); padding:0 1.5rem; margin-bottom:1.5rem; line-height:1.55; }
 .modal-body { padding:0 1.5rem; }
 
@@ -435,7 +434,7 @@ body {
 
 /* ── SETTINGS SCREEN ── */
 .settings-header { padding:3.2rem 1.5rem 1.5rem; background:var(--bg); border-bottom:1px solid var(--border2); }
-.settings-h { font-family:'Playfair Display',serif; font-size:1.5rem; font-weight:700; }
+.settings-h { font-family:Georgia,'Times New Roman',serif; font-size:1.5rem; font-weight:700; }
 
 .profile-card {
   margin:1.2rem 1.5rem;
@@ -449,7 +448,7 @@ body {
   display:flex; align-items:center; justify-content:center;
   font-size:1.4rem; font-weight:700; color:#f0ece6; flex-shrink:0;
 }
-.profile-name { font-family:'Playfair Display',serif; font-size:1.2rem; font-weight:700; color:#f0ece6; }
+.profile-name { font-family:Georgia,'Times New Roman',serif; font-size:1.2rem; font-weight:700; color:#f0ece6; }
 .profile-email { font-size:0.78rem; color:rgba(255,255,255,0.4); margin-top:0.2rem; }
 .profile-plan { font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--gold-light); background:rgba(139,111,71,0.2); padding:0.2rem 0.7rem; border-radius:50px; display:inline-block; margin-top:0.5rem; }
 
@@ -492,7 +491,7 @@ body {
 
 /* ── TRANSACTIONS SCREEN ── */
 .tx-screen-header { padding:3.2rem 1.5rem 1rem; background:var(--bg); border-bottom:1px solid var(--border2); }
-.tx-screen-h { font-family:'Playfair Display',serif; font-size:1.5rem; font-weight:700; margin-bottom:0.8rem; }
+.tx-screen-h { font-family:Georgia,'Times New Roman',serif; font-size:1.5rem; font-weight:700; margin-bottom:0.8rem; }
 .filter-row { display:flex; gap:0.5rem; overflow-x:auto; padding-bottom:0.3rem; -ms-overflow-style:none; scrollbar-width:none; }
 .filter-row::-webkit-scrollbar { display:none; }
 .filter-chip {
@@ -510,9 +509,9 @@ body {
 .loading-overlay {
   position:fixed; inset:0; background:var(--bg); z-index:500;
   display:flex; align-items:center; justify-content:center; flex-direction:column;
-  transition:opacity 0.5s; pointer-events:none;
+  transition:opacity 0.5s;
 }
-.loading-logo { font-family:'Playfair Display',serif; font-size:2.5rem; font-weight:800; color:var(--gold); margin-bottom:1rem; }
+.loading-logo { font-family:Georgia,'Times New Roman',serif; font-size:2.5rem; font-weight:800; color:var(--gold); margin-bottom:1rem; }
 .loading-bar { width:140px; height:3px; background:var(--bg4); border-radius:50px; overflow:hidden; }
 .loading-fill { height:100%; border-radius:50px; background:var(--gold); width:0%; transition:width 0.8s; }
 
@@ -530,7 +529,7 @@ body {
 .lock-req-btns { display:flex; gap:0.6rem; }
 .lock-req-btn {
   padding:0.5rem 1.1rem; border-radius:50px; border:none;
-  font-family:'DM Sans',sans-serif; font-weight:700; font-size:0.78rem;
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; font-weight:700; font-size:0.78rem;
   cursor:pointer; transition:all 0.15s;
 }
 .lock-req-btn.approve { background:var(--green); color:#fff; }
@@ -545,11 +544,7 @@ body {
 </head>
 <body>
 
-<!-- LOADING -->
-<div class="loading-overlay" id="loadingOverlay">
-  <div class="loading-logo">SafeFlow</div>
-  <div class="loading-bar"><div class="loading-fill" id="loadingFill"></div></div>
-</div>
+<div id="loadingOverlay" style="display:none"></div>
 
 <!-- TOAST -->
 <div class="toast" id="toast"></div>
@@ -710,7 +705,10 @@ body {
         <div class="greeting" id="homeGreeting">Good morning,</div>
         <div class="username" id="homeUsername">Hugo</div>
       </div>
-      <div class="avatar" id="homeAvatar" onclick="navTo('screenSettings')">H</div>
+      <div style="display:flex;align-items:center;gap:0.6rem;">
+        <button onclick="resetDemo()" title="Reset demo" style="background:none;border:none;cursor:pointer;font-size:0.7rem;color:var(--light);opacity:0.5;padding:0.3rem 0.5rem;border-radius:8px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;letter-spacing:0.3px;">↺ reset</button>
+        <div class="avatar" id="homeAvatar" onclick="navTo('screenSettings')">H</div>
+      </div>
     </div>
     <div class="period-row">
       <div class="period-badge">February 2026</div>
@@ -1196,32 +1194,20 @@ let selectedCat = 'Food';
 let selectedVaultLock = 'free';
 let insightsMonthOffset = 0;
 let currentFilter = 'All';
+let pendingUnlockVaultId = null;
+let pendingUnlockFriend = null;
 
 // ══════════════════════════════════
 // INIT
 // ══════════════════════════════════
 window.addEventListener('DOMContentLoaded', () => {
   load();
-
-  // Loading animation
-  const fill = document.getElementById('loadingFill');
-  let w = 0;
-  const iv = setInterval(() => {
-    w += 8; fill.style.width = w + '%';
-    if(w >= 100) { clearInterval(iv); setTimeout(initApp, 300); }
-  }, 60);
-});
-
-function initApp() {
   const overlay = document.getElementById('loadingOverlay');
-  overlay.style.display = 'none';
-
+  if(overlay) overlay.style.display = 'none';
   if(data.name) {
-    // Already onboarded
     showApp();
   }
-  // else onboarding screen is already visible
-}
+});
 
 function showApp() {
   document.getElementById('screenOnboard').classList.remove('active');
@@ -1327,11 +1313,19 @@ function navTo(screenId) {
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
   const navId = NAV_MAP[screenId];
   if(navId) document.getElementById(navId).classList.add('active');
-  // Render screen content
+  // Render screen content — always refresh home too so numbers stay in sync
+  if(screenId === 'screenHome') syncHome();
   if(screenId === 'screenTransactions') renderAllTx();
   if(screenId === 'screenSavings') renderVaults();
   if(screenId === 'screenInsights') renderInsights();
   window.scrollTo(0,0);
+}
+
+// Refresh all home screen numbers at once
+function syncHome() {
+  updateHomeUI();
+  renderHomeTx();
+  renderHomeSpend();
 }
 
 // ══════════════════════════════════
@@ -1348,18 +1342,25 @@ function updateHomeUI() {
   const { income, fixed, savingsTarget, transactions } = data;
   const spent = calcSpent();
   const spendBudget = Math.max(0, income - fixed - savingsTarget);
-  const remaining = Math.max(0, spendBudget - spent);
+  const remaining = spendBudget - spent;
   const pct = spendBudget > 0 ? spent / spendBudget : 0;
 
-  document.getElementById('homeBalance').textContent = '€' + remaining.toFixed(2);
-  document.getElementById('homeBalanceSub').textContent = 'of €' + spendBudget.toFixed(2) + ' budget remaining';
+  const balEl = document.getElementById('homeBalance');
+  balEl.textContent = (remaining < 0 ? '-€' : '€') + Math.abs(remaining).toFixed(2);
+  balEl.style.color = remaining < 0 ? '#e07070' : '#f0ece6';
+  document.getElementById('homeBalanceSub').textContent = remaining < 0
+    ? 'over budget — €' + Math.abs(remaining).toFixed(2) + ' in the red'
+    : 'of €' + spendBudget.toFixed(2) + ' budget remaining';
   document.getElementById('homeSpent').textContent = '−€' + spent.toFixed(2);
   document.getElementById('homeSaved').textContent = '+€' + savingsTarget.toFixed(2);
   document.getElementById('homeIncome').textContent = '€' + income.toFixed(2);
 
+  const totalSaved = (data.vaults||[]).reduce((s,v)=>s+v.amount,0);
+  const spendDisplay = remaining < 0 ? '-€' + Math.abs(remaining).toFixed(2) : '€' + remaining.toFixed(2);
+
   document.getElementById('bucketFixed').textContent = '€' + fixed.toFixed(2);
-  document.getElementById('bucketSpend').textContent = '€' + remaining.toFixed(2);
-  document.getElementById('bucketSave').textContent = '€' + savingsTarget.toFixed(2);
+  document.getElementById('bucketSpend').textContent = spendDisplay;
+  document.getElementById('bucketSave').textContent = '€' + totalSaved.toFixed(2);
 
   const barEl = document.getElementById('bucketSpendBar');
   const barPct = Math.min(100, pct * 100);
@@ -1391,8 +1392,9 @@ function updateHomeUI() {
 }
 
 function calcSpent() {
+  // Includes savings transfers (positive = spent, negative = refunded back to spending)
   return (data.transactions || [])
-    .filter(t => !t.income && !t.savings)
+    .filter(t => !t.income)
     .reduce((s, t) => s + t.amount, 0);
 }
 
@@ -1440,7 +1442,7 @@ function renderHomeTx() {
         <div class="tx-cat">${t.cat}</div>
       </div>
       <div>
-        <div class="tx-amount ${t.income?'in':'out'}">${t.income?'+':'-'}€${t.amount.toFixed(2)}</div>
+        <div class="tx-amount ${t.income||t.amount<0?'in':'out'}">${t.income||t.amount<0?'+':'-'}€${Math.abs(t.amount).toFixed(2)}</div>
         <div class="tx-date">${fmtDate(t.date)}</div>
       </div>
     </div>
@@ -1471,7 +1473,7 @@ function renderAllTx() {
             <div class="tx-cat">${t.cat}</div>
           </div>
           <div>
-            <div class="tx-amount ${t.income?'in':'out'}">${t.income?'+':t.savings?'→':'-'}€${t.amount.toFixed(2)}</div>
+            <div class="tx-amount ${t.income||t.amount<0?'in':'out'}">${t.income||t.amount<0?'+':'-'}€${Math.abs(t.amount).toFixed(2)}</div>
           </div>
         </div>`).join('')}</div>`;
   }).join('');
@@ -1533,10 +1535,15 @@ function renderVaults() {
 function addToVault(id) {
   const v = data.vaults.find(x=>x.id===id);
   if(!v) return;
-  const amt = parseFloat(prompt(`Add to "${v.name}" (current: €${v.amount}):`) || 0);
+  const amt = parseFloat(prompt(`Add to "${v.name}" (current: €${v.amount.toFixed(2)}):`) || 0);
   if(!amt || amt <= 0) return;
   v.amount += amt;
-  save(); renderVaults();
+  // Positive amount → counts as spent → reduces spending balance
+  data.transactions.unshift({
+    id: Date.now(), desc: 'Saved → ' + v.name, cat: 'Savings',
+    amount: amt, date: new Date().toISOString().slice(0,10), emoji: '🔒'
+  });
+  save(); renderVaults(); syncHome();
   showToast(`Added €${amt.toFixed(2)} to ${v.name} 🎉`);
 }
 
@@ -1544,26 +1551,40 @@ function withdrawVault(id) {
   const v = data.vaults.find(x=>x.id===id);
   if(!v) return;
   if(v.locked) { showToast('This goal is locked! Request unlock first.'); return; }
-  const amt = parseFloat(prompt(`Withdraw from "${v.name}" (available: €${v.amount}):`) || 0);
+  const amt = parseFloat(prompt(`Withdraw from "${v.name}" (available: €${v.amount.toFixed(2)}):`) || 0);
   if(!amt || amt <= 0) return;
   if(amt > v.amount) { showToast('Not enough in this goal'); return; }
   v.amount -= amt;
-  save(); renderVaults();
-  showToast(`Withdrew €${amt.toFixed(2)} ✓`);
+  // Negative amount → reduces calcSpent → increases spending balance
+  data.transactions.unshift({
+    id: Date.now(), desc: 'Withdrawn from ' + v.name, cat: 'Savings',
+    amount: -amt, date: new Date().toISOString().slice(0,10), emoji: '🔓'
+  });
+  save(); renderVaults(); syncHome();
+  showToast(`€${amt.toFixed(2)} moved back to spending ✓`);
 }
 
 function requestUnlock(id) {
   const v = data.vaults.find(x=>x.id===id);
   if(!v) return;
+  pendingUnlockVaultId = id;
   document.getElementById('unlockModalTitle').textContent = 'Unlock "' + v.name + '"';
   openModal('unlockModal');
 }
 
 function handleUnlockReq(approved) {
   document.getElementById('lockReqCard').style.display = 'none';
-  const v = data.vaults.find(x=>x.id===1);
-  if(approved && v) { v.locked = false; save(); renderVaults(); showToast('Lena approved — vault unlocked! 🔓'); }
-  else showToast('Unlock request denied.');
+  const v = data.vaults.find(x=>x.id===pendingUnlockVaultId);
+  if(approved && v) {
+    v.locked = false;
+    save(); renderVaults();
+    showToast(`${pendingUnlockFriend} approved — "${v.name}" unlocked! 🔓`);
+  } else {
+    showToast('Unlock request denied.');
+  }
+  pendingUnlockVaultId = null;
+  pendingUnlockFriend = null;
+}
 }
 
 function openAddVault() { openModal('addVaultModal'); }
@@ -1588,13 +1609,19 @@ function submitVault() {
 }
 
 function selectFriend(el, name) {
-  showToast(`Unlock request sent to ${name}! They'll get a notification.`);
-  // Simulate: after 2s show the incoming request card
+  pendingUnlockFriend = name;
+  const v = data.vaults.find(x=>x.id===pendingUnlockVaultId);
+  const vaultName = v ? v.name : 'your savings';
+  closeModal('unlockModal');
+  showToast(`Unlock request sent to ${name}!`);
+  // Simulate: after 2s the friend "approves" — update the card text then show it
   setTimeout(() => {
-    document.getElementById('lockReqCard').style.display = 'flex';
+    const card = document.getElementById('lockReqCard');
+    card.querySelector('.lock-req-title').textContent = `${name} wants to unlock your savings`;
+    card.querySelector('.lock-req-sub').textContent = `${name} sent an approval for "${vaultName}". Confirm to release the funds.`;
+    card.style.display = 'flex';
     navTo('screenSavings');
   }, 2000);
-  closeModal('unlockModal');
 }
 
 // ══════════════════════════════════
@@ -1728,7 +1755,7 @@ function submitExpense() {
   data.transactions.unshift(tx);
   save();
   closeModal('addExpenseModal');
-  updateHomeUI(); renderHomeTx(); renderHomeSpend();
+  syncHome();
   showToast('Expense saved! −€' + amt.toFixed(2));
 }
 
@@ -1768,6 +1795,15 @@ function resetApp() {
   if(!confirm('Reset everything? This deletes all your data.')) return;
   localStorage.removeItem('sf_data');
   location.reload();
+}
+
+// Reset demo data (transactions + vaults) but keep name/budget settings
+function resetDemo() {
+  data.transactions = JSON.parse(JSON.stringify(DEMO_TRANSACTIONS));
+  data.vaults = JSON.parse(JSON.stringify(DEMO_VAULTS));
+  save(); syncHome();
+  document.getElementById('lockReqCard').style.display = 'none';
+  showToast('Demo reset ↺');
 }
 
 // ══════════════════════════════════
