@@ -510,7 +510,7 @@ body {
 .loading-overlay {
   position:fixed; inset:0; background:var(--bg); z-index:500;
   display:flex; align-items:center; justify-content:center; flex-direction:column;
-  transition:opacity 0.5s;
+  transition:opacity 0.5s; pointer-events:none;
 }
 .loading-logo { font-family:'Playfair Display',serif; font-size:2.5rem; font-weight:800; color:var(--gold); margin-bottom:1rem; }
 .loading-bar { width:140px; height:3px; background:var(--bg4); border-radius:50px; overflow:hidden; }
@@ -1214,8 +1214,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 function initApp() {
   const overlay = document.getElementById('loadingOverlay');
-  overlay.style.opacity = '0';
-  setTimeout(() => overlay.style.display = 'none', 500);
+  overlay.style.display = 'none';
 
   if(data.name) {
     // Already onboarded
