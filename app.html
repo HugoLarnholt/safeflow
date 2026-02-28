@@ -710,7 +710,10 @@ body {
         <div class="greeting" id="homeGreeting">Good morning,</div>
         <div class="username" id="homeUsername">Hugo</div>
       </div>
-      <div class="avatar" id="homeAvatar" onclick="navTo('screenSettings')">H</div>
+      <div style="display:flex;align-items:center;gap:0.6rem;">
+        <button onclick="resetDemo()" title="Reset demo" style="background:none;border:none;cursor:pointer;font-size:0.7rem;color:var(--light);opacity:0.5;padding:0.3rem 0.5rem;border-radius:8px;font-family:'DM Sans',sans-serif;letter-spacing:0.3px;">↺ reset</button>
+        <div class="avatar" id="homeAvatar" onclick="navTo('screenSettings')">H</div>
+      </div>
     </div>
     <div class="period-row">
       <div class="period-badge">February 2026</div>
@@ -1357,19 +1360,24 @@ function updateHomeUI() {
   const { income, fixed, savingsTarget, transactions } = data;
   const spent = calcSpent();
   const spendBudget = Math.max(0, income - fixed - savingsTarget);
-  const remaining = Math.max(0, spendBudget - spent);
+  const remaining = spendBudget - spent;
   const pct = spendBudget > 0 ? spent / spendBudget : 0;
 
-  document.getElementById('homeBalance').textContent = '€' + remaining.toFixed(2);
-  document.getElementById('homeBalanceSub').textContent = 'of €' + spendBudget.toFixed(2) + ' budget remaining';
+  const balEl = document.getElementById('homeBalance');
+  balEl.textContent = (remaining < 0 ? '-€' : '€') + Math.abs(remaining).toFixed(2);
+  balEl.style.color = remaining < 0 ? '#e07070' : '#f0ece6';
+  document.getElementById('homeBalanceSub').textContent = remaining < 0
+    ? 'over budget — €' + Math.abs(remaining).toFixed(2) + ' in the red'
+    : 'of €' + spendBudget.toFixed(2) + ' budget remaining';
   document.getElementById('homeSpent').textContent = '−€' + spent.toFixed(2);
   document.getElementById('homeSaved').textContent = '+€' + savingsTarget.toFixed(2);
   document.getElementById('homeIncome').textContent = '€' + income.toFixed(2);
 
   const totalSaved = (data.vaults||[]).reduce((s,v)=>s+v.amount,0);
+  const spendDisplay = remaining < 0 ? '-€' + Math.abs(remaining).toFixed(2) : '€' + remaining.toFixed(2);
 
   document.getElementById('bucketFixed').textContent = '€' + fixed.toFixed(2);
-  document.getElementById('bucketSpend').textContent = '€' + remaining.toFixed(2);
+  document.getElementById('bucketSpend').textContent = spendDisplay;
   document.getElementById('bucketSave').textContent = '€' + totalSaved.toFixed(2);
 
   const barEl = document.getElementById('bucketSpendBar');
@@ -1791,6 +1799,15 @@ function resetApp() {
   if(!confirm('Reset everything? This deletes all your data.')) return;
   localStorage.removeItem('sf_data');
   location.reload();
+}
+
+// Reset demo data (transactions + vaults) but keep name/budget settings
+function resetDemo() {
+  data.transactions = JSON.parse(JSON.stringify(DEMO_TRANSACTIONS));
+  data.vaults = JSON.parse(JSON.stringify(DEMO_VAULTS));
+  save(); syncHome();
+  document.getElementById('lockReqCard').style.display = 'none';
+  showToast('Demo reset ↺');
 }
 
 // ══════════════════════════════════
