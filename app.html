@@ -1410,8 +1410,9 @@ function updateHomeUI() {
 }
 
 function calcSpent() {
+  // Includes savings transfers (positive = spent, negative = refunded back to spending)
   return (data.transactions || [])
-    .filter(t => !t.income && !t.savings)
+    .filter(t => !t.income)
     .reduce((s, t) => s + t.amount, 0);
 }
 
@@ -1459,7 +1460,7 @@ function renderHomeTx() {
         <div class="tx-cat">${t.cat}</div>
       </div>
       <div>
-        <div class="tx-amount ${t.income?'in':'out'}">${t.income?'+':'-'}€${t.amount.toFixed(2)}</div>
+        <div class="tx-amount ${t.income||t.amount<0?'in':'out'}">${t.income||t.amount<0?'+':'-'}€${Math.abs(t.amount).toFixed(2)}</div>
         <div class="tx-date">${fmtDate(t.date)}</div>
       </div>
     </div>
@@ -1490,7 +1491,7 @@ function renderAllTx() {
             <div class="tx-cat">${t.cat}</div>
           </div>
           <div>
-            <div class="tx-amount ${t.income?'in':'out'}">${t.income?'+':t.savings?'→':'-'}€${t.amount.toFixed(2)}</div>
+            <div class="tx-amount ${t.income||t.amount<0?'in':'out'}">${t.income||t.amount<0?'+':'-'}€${Math.abs(t.amount).toFixed(2)}</div>
           </div>
         </div>`).join('')}</div>`;
   }).join('');
@@ -1555,11 +1556,10 @@ function addToVault(id) {
   const amt = parseFloat(prompt(`Add to "${v.name}" (current: €${v.amount.toFixed(2)}):`) || 0);
   if(!amt || amt <= 0) return;
   v.amount += amt;
-  // Log as a savings transaction so home screen stays in sync
+  // Positive amount → counts as spent → reduces spending balance
   data.transactions.unshift({
     id: Date.now(), desc: 'Saved → ' + v.name, cat: 'Savings',
-    amount: amt, date: new Date().toISOString().slice(0,10),
-    emoji: '🔒', savings: true
+    amount: amt, date: new Date().toISOString().slice(0,10), emoji: '🔒'
   });
   save(); renderVaults(); syncHome();
   showToast(`Added €${amt.toFixed(2)} to ${v.name} 🎉`);
@@ -1573,14 +1573,13 @@ function withdrawVault(id) {
   if(!amt || amt <= 0) return;
   if(amt > v.amount) { showToast('Not enough in this goal'); return; }
   v.amount -= amt;
-  // Log as income so it flows back into spending balance
+  // Negative amount → reduces calcSpent → increases spending balance
   data.transactions.unshift({
     id: Date.now(), desc: 'Withdrawn from ' + v.name, cat: 'Savings',
-    amount: amt, date: new Date().toISOString().slice(0,10),
-    emoji: '🔒', income: true
+    amount: -amt, date: new Date().toISOString().slice(0,10), emoji: '🔓'
   });
   save(); renderVaults(); syncHome();
-  showToast(`€${amt.toFixed(2)} moved back to spending balance ✓`);
+  showToast(`€${amt.toFixed(2)} moved back to spending ✓`);
 }
 
 function requestUnlock(id) {
