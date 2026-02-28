@@ -544,7 +544,11 @@ body {
 </head>
 <body>
 
-<div id="loadingOverlay" style="display:none"></div>
+<!-- LOADING -->
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="loading-logo">SafeFlow</div>
+  <div class="loading-bar"><div class="loading-fill" id="loadingFill"></div></div>
+</div>
 
 <!-- TOAST -->
 <div class="toast" id="toast"></div>
@@ -1191,6 +1195,8 @@ function save() {
 
 // ── State ──
 let selectedCat = 'Food';
+let pendingUnlockVaultId = null;
+let pendingUnlockFriend = null;
 let selectedVaultLock = 'free';
 let insightsMonthOffset = 0;
 let currentFilter = 'All';
@@ -1202,12 +1208,21 @@ let pendingUnlockFriend = null;
 // ══════════════════════════════════
 window.addEventListener('DOMContentLoaded', () => {
   load();
-  const overlay = document.getElementById('loadingOverlay');
-  if(overlay) overlay.style.display = 'none';
-  if(data.name) {
-    showApp();
-  }
+
+  // Loading animation
+  const fill = document.getElementById('loadingFill');
+  let w = 0;
+  const iv = setInterval(() => {
+    w += 8; fill.style.width = w + '%';
+    if(w >= 100) { clearInterval(iv); setTimeout(initApp, 300); }
+  }, 60);
 });
+
+function initApp() {
+  const overlay = document.getElementById('loadingOverlay');
+  if(overlay) { overlay.style.display = 'none'; }
+  if(data.name) { showApp(); }
+}
 
 function showApp() {
   document.getElementById('screenOnboard').classList.remove('active');
@@ -1306,6 +1321,8 @@ const NAV_MAP = {
   screenSavings:'nav-savings', screenInsights:'nav-insights', screenSettings:null
 };
 
+function syncHome() { updateHomeUI(); renderHomeTx(); renderHomeSpend(); }
+
 function navTo(screenId) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById(screenId).classList.add('active');
@@ -1314,6 +1331,7 @@ function navTo(screenId) {
   const navId = NAV_MAP[screenId];
   if(navId) document.getElementById(navId).classList.add('active');
   // Render screen content — always refresh home too so numbers stay in sync
+  if(screenId === 'screenHome') syncHome();
   if(screenId === 'screenHome') syncHome();
   if(screenId === 'screenTransactions') renderAllTx();
   if(screenId === 'screenSavings') renderVaults();
@@ -1790,6 +1808,14 @@ function saveBudget() {
 }
 
 function openFriendsSettings() { showToast('Manage trusted friends — coming soon!'); }
+
+function resetDemo() {
+  data.transactions = JSON.parse(JSON.stringify(DEMO_TRANSACTIONS));
+  data.vaults = JSON.parse(JSON.stringify(DEMO_VAULTS));
+  save(); syncHome();
+  document.getElementById('lockReqCard').style.display = 'none';
+  showToast('Demo reset ↺');
+}
 
 function resetApp() {
   if(!confirm('Reset everything? This deletes all your data.')) return;
