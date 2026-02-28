@@ -1328,11 +1328,19 @@ function navTo(screenId) {
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
   const navId = NAV_MAP[screenId];
   if(navId) document.getElementById(navId).classList.add('active');
-  // Render screen content
+  // Render screen content — always refresh home too so numbers stay in sync
+  if(screenId === 'screenHome') syncHome();
   if(screenId === 'screenTransactions') renderAllTx();
   if(screenId === 'screenSavings') renderVaults();
   if(screenId === 'screenInsights') renderInsights();
   window.scrollTo(0,0);
+}
+
+// Refresh all home screen numbers at once
+function syncHome() {
+  updateHomeUI();
+  renderHomeTx();
+  renderHomeSpend();
 }
 
 // ══════════════════════════════════
@@ -1358,9 +1366,11 @@ function updateHomeUI() {
   document.getElementById('homeSaved').textContent = '+€' + savingsTarget.toFixed(2);
   document.getElementById('homeIncome').textContent = '€' + income.toFixed(2);
 
+  const totalSaved = (data.vaults||[]).reduce((s,v)=>s+v.amount,0);
+
   document.getElementById('bucketFixed').textContent = '€' + fixed.toFixed(2);
   document.getElementById('bucketSpend').textContent = '€' + remaining.toFixed(2);
-  document.getElementById('bucketSave').textContent = '€' + savingsTarget.toFixed(2);
+  document.getElementById('bucketSave').textContent = '€' + totalSaved.toFixed(2);
 
   const barEl = document.getElementById('bucketSpendBar');
   const barPct = Math.min(100, pct * 100);
@@ -1534,10 +1544,16 @@ function renderVaults() {
 function addToVault(id) {
   const v = data.vaults.find(x=>x.id===id);
   if(!v) return;
-  const amt = parseFloat(prompt(`Add to "${v.name}" (current: €${v.amount}):`) || 0);
+  const amt = parseFloat(prompt(`Add to "${v.name}" (current: €${v.amount.toFixed(2)}):`) || 0);
   if(!amt || amt <= 0) return;
   v.amount += amt;
-  save(); renderVaults();
+  // Log as a savings transaction so home screen stays in sync
+  data.transactions.unshift({
+    id: Date.now(), desc: 'Saved → ' + v.name, cat: 'Savings',
+    amount: amt, date: new Date().toISOString().slice(0,10),
+    emoji: '🔒', savings: true
+  });
+  save(); renderVaults(); syncHome();
   showToast(`Added €${amt.toFixed(2)} to ${v.name} 🎉`);
 }
 
@@ -1545,12 +1561,18 @@ function withdrawVault(id) {
   const v = data.vaults.find(x=>x.id===id);
   if(!v) return;
   if(v.locked) { showToast('This goal is locked! Request unlock first.'); return; }
-  const amt = parseFloat(prompt(`Withdraw from "${v.name}" (available: €${v.amount}):`) || 0);
+  const amt = parseFloat(prompt(`Withdraw from "${v.name}" (available: €${v.amount.toFixed(2)}):`) || 0);
   if(!amt || amt <= 0) return;
   if(amt > v.amount) { showToast('Not enough in this goal'); return; }
   v.amount -= amt;
-  save(); renderVaults();
-  showToast(`Withdrew €${amt.toFixed(2)} ✓`);
+  // Log as income so it flows back into spending balance
+  data.transactions.unshift({
+    id: Date.now(), desc: 'Withdrawn from ' + v.name, cat: 'Savings',
+    amount: amt, date: new Date().toISOString().slice(0,10),
+    emoji: '🔒', income: true
+  });
+  save(); renderVaults(); syncHome();
+  showToast(`€${amt.toFixed(2)} moved back to spending balance ✓`);
 }
 
 function requestUnlock(id) {
@@ -1729,7 +1751,7 @@ function submitExpense() {
   data.transactions.unshift(tx);
   save();
   closeModal('addExpenseModal');
-  updateHomeUI(); renderHomeTx(); renderHomeSpend();
+  syncHome();
   showToast('Expense saved! −€' + amt.toFixed(2));
 }
 
