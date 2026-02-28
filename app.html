@@ -1199,6 +1199,8 @@ let selectedCat = 'Food';
 let selectedVaultLock = 'free';
 let insightsMonthOffset = 0;
 let currentFilter = 'All';
+let pendingUnlockVaultId = null;
+let pendingUnlockFriend = null;
 
 // ══════════════════════════════════
 // INIT
@@ -1585,15 +1587,24 @@ function withdrawVault(id) {
 function requestUnlock(id) {
   const v = data.vaults.find(x=>x.id===id);
   if(!v) return;
+  pendingUnlockVaultId = id;
   document.getElementById('unlockModalTitle').textContent = 'Unlock "' + v.name + '"';
   openModal('unlockModal');
 }
 
 function handleUnlockReq(approved) {
   document.getElementById('lockReqCard').style.display = 'none';
-  const v = data.vaults.find(x=>x.id===1);
-  if(approved && v) { v.locked = false; save(); renderVaults(); showToast('Lena approved — vault unlocked! 🔓'); }
-  else showToast('Unlock request denied.');
+  const v = data.vaults.find(x=>x.id===pendingUnlockVaultId);
+  if(approved && v) {
+    v.locked = false;
+    save(); renderVaults();
+    showToast(`${pendingUnlockFriend} approved — "${v.name}" unlocked! 🔓`);
+  } else {
+    showToast('Unlock request denied.');
+  }
+  pendingUnlockVaultId = null;
+  pendingUnlockFriend = null;
+}
 }
 
 function openAddVault() { openModal('addVaultModal'); }
@@ -1618,13 +1629,19 @@ function submitVault() {
 }
 
 function selectFriend(el, name) {
-  showToast(`Unlock request sent to ${name}! They'll get a notification.`);
-  // Simulate: after 2s show the incoming request card
+  pendingUnlockFriend = name;
+  const v = data.vaults.find(x=>x.id===pendingUnlockVaultId);
+  const vaultName = v ? v.name : 'your savings';
+  closeModal('unlockModal');
+  showToast(`Unlock request sent to ${name}!`);
+  // Simulate: after 2s the friend "approves" — update the card text then show it
   setTimeout(() => {
-    document.getElementById('lockReqCard').style.display = 'flex';
+    const card = document.getElementById('lockReqCard');
+    card.querySelector('.lock-req-title').textContent = `${name} wants to unlock your savings`;
+    card.querySelector('.lock-req-sub').textContent = `${name} sent an approval for "${vaultName}". Confirm to release the funds.`;
+    card.style.display = 'flex';
     navTo('screenSavings');
   }, 2000);
-  closeModal('unlockModal');
 }
 
 // ══════════════════════════════════
